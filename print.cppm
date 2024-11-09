@@ -9,6 +9,7 @@ void put_1(auto);
 void put_1(char c) { putc(c, stdout); }
 void put_1(int c) { printf("%d", c); }
 void put_1(long c) { printf("%ld", c); }
+void put_1(unsigned c) { printf("%d", c); }
 void put_1(const char * c) { printf("%s", c); }
 void put_1(jute::view c) { fwrite(c.begin(), 1, c.size(), stdout); }
 void put_1(jute::heap c) { put_1(*c); }
