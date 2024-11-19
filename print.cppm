@@ -3,6 +3,7 @@ module;
 #include <stdio.h>
 
 export module print;
+import hai;
 import jute;
 
 void put_1(auto);
@@ -13,11 +14,12 @@ void put_1(unsigned c) { printf("%d", c); }
 void put_1(const char * c) { printf("%s", c); }
 void put_1(jute::view c) { fwrite(c.begin(), 1, c.size(), stdout); }
 void put_1(jute::heap c) { put_1(*c); }
+void put_1(const hai::cstr & c) { puts(c.begin()); }
 
-export inline void put(auto... args) {
+export inline void put(auto &&... args) {
   (put_1(args), ...);
 }
-export inline void putln(auto... args) {
+export inline void putln(auto &&... args) {
   put(args..., '\n');
 }
 export __attribute__((format(printf, 1, 2))) void putf(const char * msg, ...) {
