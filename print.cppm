@@ -14,7 +14,7 @@ void put_1(unsigned c) { printf("%d", c); }
 void put_1(const char * c) { printf("%s", c); }
 void put_1(jute::view c) { fwrite(c.begin(), 1, c.size(), stdout); }
 void put_1(jute::heap c) { put_1(*c); }
-void put_1(const hai::cstr & c) { puts(c.begin()); }
+void put_1(const hai::cstr & c) { printf("%s", c.begin()); }
 
 export inline void put(auto &&... args) {
   (put_1(args), ...);
