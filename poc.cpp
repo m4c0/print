@@ -3,7 +3,7 @@
 import jute;
 import print;
 
-int main() {
+int main() try {
   using namespace jute::literals;
 
   put("\e[33m");
@@ -12,4 +12,11 @@ int main() {
   putf("i'm a basic %sf", "print");
   putfn("%c", '!');
   putln("value ", 6969, '!', " view"_s);
+
+  try {
+    die("a painful death");
+  } catch (...) {
+    whilst("testing this");
+  }
+} catch (death) {
 }

@@ -35,3 +35,16 @@ export __attribute__((format(printf, 1, 2))) void putfn(const char * msg, ...) {
   va_end(arg);
   printf("\n");
 }
+
+export struct death {};
+export inline void die(auto &&... args) {
+  (put_1(stderr, args), ...);
+  put_1(stderr, "\n");
+  throw death {};
+}
+export inline void whilst(auto &&... args) {
+  put_1(stderr, "while ");
+  (put_1(stderr, args), ...);
+  put_1(stderr, "\n");
+  throw;
+}
