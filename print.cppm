@@ -6,18 +6,18 @@ export module print;
 import hai;
 import jute;
 
-void put_1(auto);
-void put_1(char c) { putc(c, stdout); }
-void put_1(int c) { printf("%d", c); }
-void put_1(long c) { printf("%ld", c); }
-void put_1(unsigned c) { printf("%d", c); }
-void put_1(const char * c) { printf("%s", c); }
-void put_1(jute::view c) { fwrite(c.begin(), 1, c.size(), stdout); }
-void put_1(jute::heap c) { put_1(*c); }
-void put_1(const hai::cstr & c) { printf("%s", c.begin()); }
+void put_1(FILE * f, auto);
+void put_1(FILE * f, char c) { putc(c, f); }
+void put_1(FILE * f, int c) { fprintf(f, "%d", c); }
+void put_1(FILE * f, long c) { fprintf(f, "%ld", c); }
+void put_1(FILE * f, unsigned c) { fprintf(f, "%d", c); }
+void put_1(FILE * f, const char * c) { fprintf(f, "%s", c); }
+void put_1(FILE * f, jute::view c) { fwrite(c.begin(), 1, c.size(), f); }
+void put_1(FILE * f, jute::heap c) { put_1(f, *c); }
+void put_1(FILE * f, const hai::cstr & c) { fprintf(f, "%s", c.begin()); }
 
 export inline void put(auto &&... args) {
-  (put_1(args), ...);
+  (put_1(stdout, args), ...);
 }
 export inline void putln(auto &&... args) {
   put(args..., '\n');
