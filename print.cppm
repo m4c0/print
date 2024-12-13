@@ -6,7 +6,7 @@ export module print;
 import hai;
 import jute;
 
-void put_1(FILE * f, auto);
+constexpr void put_1(FILE * f, auto); // cexpr fires warnings if undefined
 void put_1(FILE * f, char c) { putc(c, f); }
 void put_1(FILE * f, int c) { fprintf(f, "%d", c); }
 void put_1(FILE * f, long c) { fprintf(f, "%ld", c); }
