@@ -42,7 +42,7 @@ export [[noreturn]] inline void die(auto &&... args) {
   put_1(stderr, "\n");
   throw death {};
 }
-export __attribute__((format(printf, 1, 2))) void dief(const char * msg, ...) {
+export [[noreturn]] __attribute__((format(printf, 1, 2))) void dief(const char * msg, ...) {
   va_list arg;
   va_start(arg, msg);
   vfprintf(stderr, msg, arg);
@@ -55,7 +55,7 @@ export [[noreturn]] inline void whilst(auto &&... args) {
   put_1(stderr, "\n");
   throw;
 }
-export __attribute__((format(printf, 1, 2))) void whilstf(const char * msg, ...) {
+export [[noreturn]] __attribute__((format(printf, 1, 2))) void whilstf(const char * msg, ...) {
   va_list arg;
   va_start(arg, msg);
   vfprintf(stderr, msg, arg);
