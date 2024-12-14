@@ -1,12 +1,11 @@
 module;
+#pragma leco add_impl "non_literals"
 #include <stdarg.h>
 #include <stdio.h>
 
 export module print;
-import hai;
-import jute;
 
-constexpr void put_1(FILE * f, auto); // cexpr fires warnings if undefined
+void put_1(FILE * f, auto);
 void put_1(FILE * f, char c) { putc(c, f); }
 void put_1(FILE * f, int c) { fprintf(f, "%d", c); }
 void put_1(FILE * f, long c) { fprintf(f, "%ld", c); }
@@ -15,10 +14,6 @@ void put_1(FILE * f, char * c) { fprintf(f, "%s", c); }
 void put_1(FILE * f, const char * c) { fprintf(f, "%s", c); }
 void put_1(FILE * f, void * c, unsigned len) { fwrite(c, 1, len, f); }
 void put_1(FILE * f, const void * c, unsigned len) { fwrite(c, 1, len, f); }
-
-void put_1(FILE * f, jute::view c) { put_1(f, c.begin(), c.size()); }
-void put_1(FILE * f, jute::heap c) { put_1(f, *c); }
-void put_1(FILE * f, const hai::cstr & c) { put_1(f, c.begin()); }
 
 export inline void put(auto &&... args) {
   (put_1(stdout, args), ...);
