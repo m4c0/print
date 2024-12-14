@@ -9,6 +9,8 @@ void put_1(FILE * f, auto);
 void put_1(FILE * f, char c) { putc(c, f); }
 void put_1(FILE * f, int c) { fprintf(f, "%d", c); }
 void put_1(FILE * f, long c) { fprintf(f, "%ld", c); }
+void put_1(FILE * f, long long c) { fprintf(f, "%lld", c); }
+void put_1(FILE * f, unsigned long long c) { fprintf(f, "%lld", c); }
 void put_1(FILE * f, unsigned c) { fprintf(f, "%d", c); }
 void put_1(FILE * f, char * c) { fprintf(f, "%s", c); }
 void put_1(FILE * f, const char * c) { fprintf(f, "%s", c); }
