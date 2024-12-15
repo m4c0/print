@@ -7,6 +7,8 @@ export module print;
 
 void put_1(FILE * f, auto);
 void put_1(FILE * f, char c) { putc(c, f); }
+void put_1(FILE * f, float c) { fprintf(f, "%f", c); }
+void put_1(FILE * f, double c) { fprintf(f, "%lf", c); }
 void put_1(FILE * f, int c) { fprintf(f, "%d", c); }
 void put_1(FILE * f, long c) { fprintf(f, "%ld", c); }
 void put_1(FILE * f, unsigned long c) { fprintf(f, "%ld", c); }
