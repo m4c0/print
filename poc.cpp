@@ -1,5 +1,6 @@
 #pragma leco tool
 
+import hai;
 import jute;
 import print;
 
@@ -11,7 +12,7 @@ int main() try {
   putln("\e[0m");
   putf("i'm a basic %sf", "print");
   putfn("%c", '!');
-  putln("value ", 6969, '!', " view"_s);
+  putln("value ", 6969, '!', " view"_s, " cstr"_s.cstr());
 
   try {
     die("a painful death");
