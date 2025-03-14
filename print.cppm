@@ -40,6 +40,26 @@ export __attribute__((format(printf, 1, 2))) void putfn(const char * msg, ...) {
   printf("\n");
 }
 
+export inline void err(auto &&... args) {
+  (put_1(stdout, args), ...);
+}
+export inline void errln(auto &&... args) {
+  err(args..., '\n');
+}
+export __attribute__((format(printf, 1, 2))) void errf(const char * msg, ...) {
+  va_list arg;
+  va_start(arg, msg);
+  fprintf(stderr, "\n");
+  va_end(arg);
+}
+export __attribute__((format(printf, 1, 2))) void errfn(const char * msg, ...) {
+  va_list arg;
+  va_start(arg, msg);
+  vfprintf(stderr, msg, arg);
+  va_end(arg);
+  fprintf(stderr, "\n");
+}
+
 export struct death {};
 export [[noreturn]] inline void die(auto &&... args) {
   (put_1(stderr, args), ...);
