@@ -41,7 +41,7 @@ export __attribute__((format(printf, 1, 2))) void putfn(const char * msg, ...) {
 }
 
 export inline void err(auto &&... args) {
-  (put_1(stdout, args), ...);
+  (put_1(stderr, args), ...);
 }
 export inline void errln(auto &&... args) {
   err(args..., '\n');
