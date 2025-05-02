@@ -1,4 +1,6 @@
 module;
+// Allows usage of attribute((format)) with parameter pack
+#pragma clang diagnostic ignored "-Wgcc-compat"
 #pragma leco add_impl "non_literals"
 #include <stdarg.h>
 #include <stdio.h>
@@ -20,69 +22,53 @@ void put_1(FILE * f, const char * c) { fprintf(f, "%s", c); }
 void put_1(FILE * f, void * c, unsigned len) { fwrite(c, 1, len, f); }
 void put_1(FILE * f, const void * c, unsigned len) { fwrite(c, 1, len, f); }
 
-export inline void put(auto &&... args) {
-  (put_1(stdout, args), ...);
+export inline void fput(FILE * f, auto &&... args) {
+  (put_1(f, args), ...);
 }
-export inline void putln(auto &&... args) {
-  put(args..., '\n');
+export inline void fputln(FILE * f, auto &&... args) {
+  fput(f, args..., '\n');
 }
-export __attribute__((format(printf, 1, 2))) void putf(const char * msg, ...) {
-  va_list arg;
-  va_start(arg, msg);
-  vprintf(msg, arg);
-  va_end(arg);
+export __attribute__((format(printf, 2, 3))) void fputf(FILE * f, const char * msg, auto &&... args) {
+  fprintf(f, msg, args...);
 }
-export __attribute__((format(printf, 1, 2))) void putfn(const char * msg, ...) {
-  va_list arg;
-  va_start(arg, msg);
-  vprintf(msg, arg);
-  va_end(arg);
-  printf("\n");
+export __attribute__((format(printf, 2, 3))) void fputfn(FILE * f, const char * msg, auto &&... args) {
+  fprintf(f, msg, args...);
+  fputln(f);
 }
 
-export inline void err(auto &&... args) {
-  (put_1(stderr, args), ...);
+export inline void put(auto &&... args) { fput(stdout, args...); }
+export inline void putln(auto &&... args) { fputln(stdout, args...); }
+export __attribute__((format(printf, 1, 2))) void putf(const char * msg, auto &&... args) {
+  fputf(stdout, msg, args...);
 }
-export inline void errln(auto &&... args) {
-  err(args..., '\n');
+export __attribute__((format(printf, 1, 2))) void putfn(const char * msg, auto &&... args) {
+  fputfn(stdout, msg, args...);
 }
-export __attribute__((format(printf, 1, 2))) void errf(const char * msg, ...) {
-  va_list arg;
-  va_start(arg, msg);
-  fprintf(stderr, "\n");
-  va_end(arg);
+
+export inline void err(auto &&... args) { fput(stderr, args...); }
+export inline void errln(auto &&... args) { fputln(stderr, args...); }
+export __attribute__((format(printf, 1, 2))) void errf(const char * msg, auto &&... args) {
+  fputf(stderr, msg, args...);
 }
-export __attribute__((format(printf, 1, 2))) void errfn(const char * msg, ...) {
-  va_list arg;
-  va_start(arg, msg);
-  vfprintf(stderr, msg, arg);
-  va_end(arg);
-  fprintf(stderr, "\n");
+export __attribute__((format(printf, 1, 2))) void errfn(const char * msg, auto &&... args) {
+  fputfn(stderr, msg, args...);
 }
 
 export struct death {};
 export [[noreturn]] inline void die(auto &&... args) {
-  (put_1(stderr, args), ...);
-  put_1(stderr, "\n");
+  errln(args...);
   throw death {};
 }
-export [[noreturn]] __attribute__((format(printf, 1, 2))) void dief(const char * msg, ...) {
-  va_list arg;
-  va_start(arg, msg);
-  vfprintf(stderr, msg, arg);
-  va_end(arg);
+export [[noreturn]] __attribute__((format(printf, 1, 2))) void dief(const char * msg, auto &&... args) {
+  errfn(msg, args...);
   throw death {};
 }
 export [[noreturn]] inline void whilst(auto &&... args) {
-  put_1(stderr, "while ");
-  (put_1(stderr, args), ...);
-  put_1(stderr, "\n");
+  err("while ");
+  errln(args...);
   throw;
 }
-export [[noreturn]] __attribute__((format(printf, 1, 2))) void whilstf(const char * msg, ...) {
-  va_list arg;
-  va_start(arg, msg);
-  vfprintf(stderr, msg, arg);
-  va_end(arg);
+export [[noreturn]] __attribute__((format(printf, 1, 2))) void whilstf(const char * msg, auto &&... args) {
+  errfn(msg, args...);
   throw;
 }

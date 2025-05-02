@@ -15,9 +15,9 @@ int main() try {
   putln("value ", 6969, '!', " view"_s, " cstr"_s.cstr());
 
   try {
-    die("a painful death");
+    dief("a painful %s", "death");
   } catch (...) {
-    whilst("testing this");
+    whilstf("testing %s", "this");
   }
 } catch (death) {
 }
