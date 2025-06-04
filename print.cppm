@@ -8,6 +8,7 @@ module;
 export module print;
 
 void put_1(FILE * f, const auto &);
+void put_1(FILE * f, bool c) { fprintf(f, c ? "true" : "false"); }
 void put_1(FILE * f, char c) { putc(c, f); }
 void put_1(FILE * f, float c) { fprintf(f, "%f", c); }
 void put_1(FILE * f, double c) { fprintf(f, "%lf", c); }
