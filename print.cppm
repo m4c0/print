@@ -15,6 +15,7 @@ void put_1(FILE * f, double c) { fprintf(f, "%lf", c); }
 void put_1(FILE * f, int c) { fprintf(f, "%d", c); }
 void put_1(FILE * f, long c) { fprintf(f, "%ld", c); }
 void put_1(FILE * f, unsigned long c) { fprintf(f, "%ld", c); }
+void put_1(FILE * f, long double c) { fprintf(f, "%Lf", c); }
 void put_1(FILE * f, long long c) { fprintf(f, "%lld", c); }
 void put_1(FILE * f, unsigned long long c) { fprintf(f, "%lld", c); }
 void put_1(FILE * f, unsigned c) { fprintf(f, "%d", c); }
