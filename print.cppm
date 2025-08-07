@@ -37,6 +37,9 @@ export __attribute__((format(printf, 2, 3))) void fputfn(FILE * f, const char * 
   fprintf(f, msg, args...);
   fputln(f);
 }
+export inline void fputa(FILE * f, auto &&... args) {
+  ((fput(f, args), fput(f, ' ')), ...);
+}
 
 export inline void put(auto &&... args) { fput(stdout, args...); }
 export inline void putln(auto &&... args) { fputln(stdout, args...); }
@@ -46,6 +49,9 @@ export __attribute__((format(printf, 1, 2))) void putf(const char * msg, auto &&
 export __attribute__((format(printf, 1, 2))) void putfn(const char * msg, auto &&... args) {
   fputfn(stdout, msg, args...);
 }
+export inline void puta(auto &&... args) {
+  ((put(args), put(' ')), ...);
+}
 
 export inline void err(auto &&... args) { fput(stderr, args...); }
 export inline void errln(auto &&... args) { fputln(stderr, args...); }
@@ -54,6 +60,9 @@ export __attribute__((format(printf, 1, 2))) void errf(const char * msg, auto &&
 }
 export __attribute__((format(printf, 1, 2))) void errfn(const char * msg, auto &&... args) {
   fputfn(stderr, msg, args...);
+}
+export inline void erra(auto &&... args) {
+  ((err(args), err(' ')), ...);
 }
 
 export struct death {};
