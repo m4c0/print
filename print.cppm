@@ -73,7 +73,7 @@ export inline void erra(auto &&... args) {
   ((err(args), err(' ')), ...);
 }
 export inline void erran(auto &&... args) {
-  erra(args..);
+  erra(args...);
   errln();
 }
 
