@@ -1,13 +1,14 @@
 module;
 // Allows usage of attribute((format)) with parameter pack
 #pragma clang diagnostic ignored "-Wgcc-compat"
-#pragma leco add_impl "non_literals"
 #include <stdarg.h>
 #include <stdio.h>
 
 export module print;
 
-void put_1(FILE * f, const auto &);
+void put_1(FILE * f, const auto & s) {
+  fprintf(f, "%.*s", static_cast<unsigned>(s.size()), s.data());
+}
 void put_1(FILE * f, bool c) { fprintf(f, c ? "true" : "false"); }
 void put_1(FILE * f, char c) { putc(c, f); }
 void put_1(FILE * f, float c) { fprintf(f, "%f", c); }
