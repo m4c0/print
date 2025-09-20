@@ -6,7 +6,13 @@ module;
 
 export module print;
 
-void put_1(FILE * f, const auto & s) {
+template<typename T>
+concept printable = requires (T t) {
+  static_cast<unsigned>(t.size());
+  static_cast<const char *>(t.data());
+};
+
+void put_1(FILE * f, const printable auto & s) {
   fprintf(f, "%.*s", static_cast<unsigned>(s.size()), s.data());
 }
 void put_1(FILE * f, bool c) { fprintf(f, c ? "true" : "false"); }
