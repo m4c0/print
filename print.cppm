@@ -28,6 +28,8 @@ void put_1(FILE * f, unsigned long long c) { fprintf(f, "%lld", c); }
 void put_1(FILE * f, unsigned c) { fprintf(f, "%d", c); }
 void put_1(FILE * f, char * c) { fprintf(f, "%s", c); }
 void put_1(FILE * f, const char * c) { fprintf(f, "%s", c); }
+void put_1(FILE * f, unsigned char * c) { fprintf(f, "%s", c); }
+void put_1(FILE * f, unsigned const char * c) { fprintf(f, "%s", c); }
 void put_1(FILE * f, void * c, unsigned len) { fwrite(c, 1, len, f); }
 void put_1(FILE * f, const void * c, unsigned len) { fwrite(c, 1, len, f); }
 
