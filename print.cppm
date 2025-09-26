@@ -7,10 +7,14 @@ module;
 export module print;
 
 template<typename T>
-concept printable = requires (T t) {
-  static_cast<unsigned>(t.size());
-  static_cast<const char *>(t.data());
-};
+concept has_charptr_data = requires (T t) { static_cast<const char *>(t.data()); };
+template<typename T>
+concept has_ucharptr_data = requires (T t) { static_cast<const unsigned char *>(t.data()); };
+template<typename T>
+concept has_size = requires (T t) { static_cast<unsigned>(t.size()); };
+
+template<typename T>
+concept printable = has_size<T> && (has_charptr_data<T> || has_ucharptr_data<T>);
 
 void put_1(FILE * f, const printable auto & s) {
   fprintf(f, "%.*s", static_cast<unsigned>(s.size()), s.data());
